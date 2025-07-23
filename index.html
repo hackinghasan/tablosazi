@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>تبلیغ تابلوسازی</title>
+  <style>
+    body {
+      direction: rtl;
+      font-family: Tahoma, sans-serif;
+      background: #f9f9f9;
+      padding: 30px;
+      color: #333;
+    }
+    input, button {
+      font-size: 16px;
+      margin: 5px 0;
+      padding: 5px;
+    }
+    #output {
+      margin-top: 20px;
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      white-space: pre-line;
+    }
+    #qrcode canvas {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>سلام! اطلاعاتتو وارد کن :)</h2>
+  <label>اسم: <input id="name" type="text"></label><br>
+  <label>فامیل: <input id="family" type="text"></label><br>
+  <label>سن: <input id="age" type="number"></label><br>
+  <button onclick="showMessage()">نمایش پیام</button>
+
+  <div id="output"></div>
+  <hr>
+  <h3>ساخت QR Code برای اینستاگرام</h3>
+  <label>لینک اینستاگرام: <input id="insta" type="text" placeholder="https://instagram.com/username"></label><br>
+  <button onclick="generateQR()">ساخت QR</button>
+  <div id="qrcode"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    function showMessage() {
+      const name = document.getElementById("name").value.trim();
+      const age = document.getElementById("age").value.trim();
+      if (!name || !age) {
+        alert("لطفاً اسم و سنتو وارد کن.");
+        return;
+      }
+      const msg = سلام چطوری\nمیدونم اسمت ${name} و حتی میدونم ${age} سالته\nولی ${name} جان باور کن این ذره‌ای برام اهمیت نداره\nتنها چیزی که برام مهمه اینه که بیای تابلوسازی من یه تابلو بگیری ما فروشمون بیشتر شه آخر ماه چک داریم\nعشق منیا ولی اگه نیای\nخیلی خری\nابلفضلی نامردی\nدلخور نشیا ولی ایشالا بری زیر تریلی اگه نیای\nقربونت برم بازم خودت میدونی من هیچ اجباری ندارم\nلینک پیجو برات گذاشتم خواستی بیا نخواستیم خاک تو سرت لیاقت نداری;
+      document.getElementById("output").innerText = msg;
+    }
+
+    function generateQR() {
+      const link = document.getElementById("insta").value.trim();
+      if (!link) {
+        alert("لینک اینستاگرامتو وارد کن.");
+        return;
+      }
+      QRCode.toCanvas(link, { width: 200 }, (err, canvas) => {
+        if (err) {
+          alert("خطا در ساخت QR: " + err);
+          return;
+        }
+        const qrcodeDiv = document.getElementById("qrcode");
+        qrcodeDiv.innerHTML = "";
+        qrcodeDiv.appendChild(canvas);
+      });
+    }
+  </script>
+</body>
+</html>
